@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Add Job - JobBoard{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+
+            <div class="card shadow border-0 bg-primary-subtle">
+    <div class="card-body p-4">
+
+<h1 class="text-center mb-4 fw-bold">Add Job</h1>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+    {{ form.title.label(class="form-label") }}
+    {{ form.title(class="form-control") }}
+</div>
+
+        <div class="mb-3">
+    {{ form.short_description.label(class="form-label") }}
+    {{ form.short_description(class="form-control") }}
+</div>
+    </p>
+    
+        <div class="mb-3">
+    {{ form.description.label(class="form-label") }}
+    {{ form.description(class="form-control", rows="5") }}
+</div>
+    </p>
+
+    <p>
+        <div class="mb-3">
+    {{ form.company.label(class="form-label") }}
+    {{ form.company(class="form-control") }}
+</div>
+    </p>
+
+    <p>
+        <div class="mb-3">
+    {{ form.salary.label(class="form-label") }}
+    {{ form.salary(class="form-control") }}
+</div>
+    </p>
+
+    <p>
+        <div class="mb-3">
+    {{ form.location.label(class="form-label") }}
+    {{ form.location(class="form-control") }}
+</div>
+    </p>
+    <p>
+    <div class="mb-3">
+    {{ form.category.label(class="form-label") }}
+    {{ form.category(class="form-select") }}
+</div>
+</p>
+
+    <p>
+        {{ form.submit(class="btn btn-primary w-100") }}
+    </p>
+
+</form>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ job.title }} - JobBoard
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow border-primary bg-white">
+                <div class="card-header bg-primary-subtle p-4">
+    <h1 class="mb-0 fw-bold">{{ job.title }}</h1>
+</div>
+                <div class="card-body p-4">
+
+
+
+<p class="alert alert-danger py-2">
+    🏢 <strong>Company:</strong> {{ job.company }}
+</p>
+
+<p class="alert alert-warning py-2">
+    📍 <strong>Location:</strong> {{ job.location }}
+</p>
+
+<p class="alert alert-success py-2">
+    💰 <strong>Salary:</strong> {{ job.salary }}
+</p>
+
+<p class="alert alert-info py-2">
+    🏷️ <strong>Category:</strong> {{ job.category.name }}
+</p>
+
+<h3 class="text-primary fw-bold mt-4 border-bottom pb-2">Short Description</h3>
+<p>{{ job.short_description }}</p>
+
+<h3 class="text-primary fw-bold mt-4 border-bottom pb-2">Full Description</h3>
+<p>{{ job.description }}</p>
+
+{% if current_user.is_authenticated and job.author_id == current_user.id %}
+    <p>
+        <a href="{{ url_for('edit_job', job_id=job.id) }}"
+   class="btn btn-primary">
+    ✏️ Edit Job
+</a>
+    </p>
+
+<form method="POST"
+      action="{{ url_for('delete_job', job_id=job.id) }}"
+      onsubmit="return confirm('Are you sure you want to delete this job?');">
+
+    {{ delete_form.hidden_tag() }}
+
+    <button type="submit" class="btn btn-danger">
+    🗑️ Delete Job
+</button>
+</form>
+
+{% endif %}
+
+<p>
+    <a href="{{ url_for('home') }}">Back to Jobs</a>
+</p>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

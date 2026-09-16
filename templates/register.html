@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - JobBoard</title>
+</head>
+<body>
+
+    <h1>Create Account</h1>
+
+    <form method="POST">
+
+        {{ form.hidden_tag() }}
+
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name() }}
+        </p>
+
+        {% for error in form.name.errors %}
+    <br>
+    <span>{{ error }}</span>
+{% endfor %}
+
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email() }}
+        </p>
+
+        {% for error in form.email.errors %}
+    <br>
+    <span>{{ error }}</span>
+{% endfor %}
+
+        <p>
+    {{ form.password.label }}<br>
+    {{ form.password() }}
+
+    {% for error in form.password.errors %}
+        <br>
+        <span>{{ error }}</span>
+    {% endfor %}
+</p>
+
+        <p>
+    {{ form.confirm_password.label }}<br>
+    {{ form.confirm_password() }}
+
+    {% for error in form.confirm_password.errors %}
+        <br>
+        <span>{{ error }}</span>
+    {% endfor %}
+</p>
+
+        <p>
+            {{ form.submit() }}
+        </p>
+
+    </form>
+
+</body>
+</html>

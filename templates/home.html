@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}
+Jobs - JobBoard
+{% endblock %}
+
+
+{% block content %}
+<div class="container mt-4">
+<h1>JobBoard</h1>
+
+{% if usd_to_gel %}
+    <p>
+        <strong>Exchange Rate:</strong>
+        1 USD = {{ "%.2f"|format(usd_to_gel) }} GEL
+    </p>
+{% else %}
+    <p>Exchange rate is temporarily unavailable.</p>
+{% endif %}
+
+<h2>Available Jobs</h2>
+
+<form method="GET" action="{{ url_for('home') }}" class="row g-2 mb-4">
+<div class="col-md-5">
+    <input
+        type="text"
+        name="search"
+        placeholder="Search jobs..."
+        value="{{ search }}"
+        class="form-control"
+    >
+</div>
+ <div class="col-md-2">
+    <select name="sort" class="form-select">
+    <option value="newest" {% if sort == "newest" %}selected{% endif %}>
+        Newest
+    </option>
+
+    <option value="oldest" {% if sort == "oldest" %}selected{% endif %}>
+        Oldest
+    </option>
+</select>
+ </div>
+<div class="col-md-3">
+<select name="category" class="form-select">
+    <option value="">All Categories</option>
+
+    {% for category in categories %}
+        <option value="{{ category.id }}"
+            {% if category_id == category.id %}selected{% endif %}>
+            {{ category.name }}
+        </option>
+    {% endfor %}
+</select>
+</div>
+ <div class="col-md-2">
+    <button type="submit" class="btn btn-primary">Search</button>
+</div>
+</form>
+
+<br>
+
+<div class="row g-4">
+
+    {% for job in jobs %}
+
+    <div class="col-md-6">
+        <div class="card h-100 shadow border-0">
+
+            <div class="card-header bg-primary-subtle">
+                <h4 class="mb-0">
+                    <a href="{{ url_for('job_detail', job_id=job.id) }}"
+                       class="text-decoration-none fw-bold">
+                        {{ job.title }}
+                    </a>
+                </h4>
+            </div>
+
+            <div class="card-body">
+
+                <p class="card-text">
+                    {{ job.short_description }}
+                </p>
+
+                <hr>
+
+                <p class="mb-2">
+                    👤 <strong>Author:</strong>
+                    <a href="{{ url_for('user_profile', user_id=job.author.id) }}"
+                     class="text-decoration-none fw-bold">
+                      {{ job.author.name }}
+                    </a>
+                </p>
+
+                <p class="mb-2">
+                    📅 <strong>Date:</strong>
+                    {{ job.date_posted.strftime('%d.%m.%Y') }}
+                </p>
+
+                <p class="mb-2">
+                    🏢 <strong>Company:</strong>
+                    {{ job.company }}
+                </p>
+
+                <p class="mb-2">
+                    💰 <strong>Salary:</strong>
+                    {{ job.salary }}
+                </p>
+
+                <p class="mb-3">
+                    📍 <strong>Location:</strong>
+                    {{ job.location }}
+                </p>
+
+                <a href="{{ url_for('job_detail', job_id=job.id) }}"
+                   class="btn btn-primary">
+                    Read More
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+
+    <div class="col-12">
+        <div class="alert alert-info">
+            No jobs available.
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+Profile - JobBoard
+{% endblock %}
+
+{% block content %}
+
+<h1>My Profile</h1>
+
+<p>
+    <strong>Profile Image:</strong>
+</p>
+
+<img src="{{ url_for('static', filename='profile_pics/' + user.image) }}"
+     width="150"
+     alt="Profile Image">
+
+<h2>Edit Profile</h2>
+
+<form method="POST" enctype="multipart/form-data">
+
+    {{ form.hidden_tag() }}
+
+    <p>
+        {{ form.name.label }}<br>
+        {{ form.name() }}
+    </p>
+
+    <p>
+        {{ form.email.label }}<br>
+        {{ form.email() }}
+    </p>
+
+    <p>
+    {{ form.picture.label }}<br>
+    {{ form.picture() }}
+</p>
+
+    <p>
+        {{ form.submit() }}
+    </p>
+
+</form>
+
+{% endblock %}

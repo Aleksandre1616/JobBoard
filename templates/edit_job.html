@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit Job - JobBoard
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card shadow border-0 bg-primary-subtle">
+                <div class="card-body p-4">
+<h1 class="text-center mb-4 fw-bold">Edit Job</h1>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+    {{ form.title.label(class="form-label") }}
+    {{ form.title(class="form-control") }}
+</div>
+
+    <div class="mb-3">
+    {{ form.short_description.label(class="form-label") }}
+    {{ form.short_description(class="form-control") }}
+</div>
+
+    <div class="mb-3">
+    {{ form.description.label(class="form-label") }}
+    {{ form.description(class="form-control", rows="5") }}
+</div>
+
+    <div class="mb-3">
+    {{ form.company.label(class="form-label") }}
+    {{ form.company(class="form-control") }}
+</div>
+
+    <div class="mb-3">
+    {{ form.salary.label(class="form-label") }}
+    {{ form.salary(class="form-control") }}
+</div>
+
+<div class="mb-3">
+    {{ form.location.label(class="form-label") }}
+    {{ form.location(class="form-control") }}
+</div>
+
+    <div class="mb-3">
+    {{ form.category.label(class="form-label") }}
+    {{ form.category(class="form-select") }}
+</div>
+
+    <div class="d-grid mb-3">
+    {{ form.submit(value="Update Job", class="btn btn-primary") }}
+</div>
+</form>
+
+<div class="d-grid">
+    <a href="{{ url_for('job_detail', job_id=job.id) }}"
+       class="btn btn-outline-secondary">Cancel</a>
+</div>
+
+{% endblock %}
