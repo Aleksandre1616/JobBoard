@@ -10,7 +10,9 @@ from PIL import Image
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "jobboard-secret-key-2026"
 # SQL Database
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///jobboard.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
+    "DATABASE_URL", "sqlite:///jobboard.db"
+)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 logging.basicConfig(
@@ -47,7 +49,25 @@ def save_picture(form_picture):
     image.save(picture_path)
 
     return picture_filename
+def save_job_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, file_ext = os.path.splitext(form_picture.filename)
+    picture_filename = random_hex + file_ext
 
+    picture_path = os.path.join(
+        app.root_path,
+        "static",
+        "job_pics",
+        picture_filename
+    )
+
+    os.makedirs(os.path.dirname(picture_path), exist_ok=True)
+
+    image = Image.open(form_picture)
+    image.thumbnail((800, 500))
+    image.save(picture_path)
+
+    return picture_filename
 def get_usd_to_gel():
     try:
         response = requests.get(
@@ -173,6 +193,10 @@ def add_job():
         for category in Category.query.all()
     ]
     if form.validate_on_submit():
+        image_filename = None
+
+        if form.image.data:
+            image_filename = save_job_picture(form.image.data)
         job = Job(
             title=form.title.data,
             short_description=form.short_description.data,
@@ -181,6 +205,7 @@ def add_job():
             salary=form.salary.data,
             location=form.location.data,
             author_id=current_user.id,
+            image=image_filename,
             category_id=form.category.data
         )
 

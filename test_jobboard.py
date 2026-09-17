@@ -1,4 +1,8 @@
 import unittest
+import os
+
+os.environ["DATABASE_URL"] = "sqlite:///:memory:"
+
 from main import app
 from extensions import db
 from models import User, Job, Category
@@ -8,7 +12,7 @@ class JobBoardTestCase(unittest.TestCase):
     def setUp(self):
         app.config["TESTING"] = True
         app.config["WTF_CSRF_ENABLED"] = False
-        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+
 
         self.app_context = app.app_context()
         self.app_context.push()

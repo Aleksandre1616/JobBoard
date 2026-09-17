@@ -75,7 +75,11 @@ Jobs - JobBoard
                     </a>
                 </h4>
             </div>
-
+{% if job.image %}
+    <img src="{{ url_for('static', filename='job_pics/' + job.image) }}"
+         class="card-img-top"
+         alt="{{ job.title }}">
+{% endif %}
             <div class="card-body">
 
                 <p class="card-text">

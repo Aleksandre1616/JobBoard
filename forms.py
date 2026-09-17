@@ -76,6 +76,10 @@ class JobForm(FlaskForm):
             coerce=int,
             validators=[DataRequired()]
         )
+        image = FileField(
+            "Job Image",
+            validators=[FileAllowed(["jpg", "jpeg", "png", "webp"], "Images only!")]
+        )
 
         submit = SubmitField("Add Job")
 

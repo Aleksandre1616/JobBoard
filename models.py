@@ -32,7 +32,8 @@ class Job(db.Model):
     salary = db.Column(db.String(100), nullable=False)
     location = db.Column(db.String(150), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
+    image = db.Column(db.String(100), nullable=True)
+    
     author_id = db.Column(
         db.Integer,
         db.ForeignKey("user.id"),

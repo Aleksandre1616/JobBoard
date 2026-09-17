@@ -12,7 +12,12 @@
 
             <div class="card shadow border-0 mb-4">
                 <div class="card-body text-center p-4">
-
+<img src="{{ url_for('static', filename='profile_pics/' + user.image) }}"
+     class="rounded-circle border shadow-sm mb-3"
+     width="150"
+     height="150"
+     style="object-fit: cover;"
+     alt="Profile Image">
                     <h2 class="fw-bold">{{ user.name }}</h2>
 
                     <p class="text-muted">
